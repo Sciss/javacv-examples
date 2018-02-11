@@ -4,23 +4,25 @@ name := "FlyCapture2-demo"
 
 version := "1.2"
 
-scalaVersion := "2.11.8"
+scalaVersion := "2.12.4"
 
 // Platform classifier for native library dependencies
 lazy val platform = org.bytedeco.javacpp.Loader.getPlatform
 
+// retrieveManaged in ThisBuild := true
+
 // @formatter:off
 val commonSettings = Seq(
-  scalaVersion := "2.11.8",
-  scalacOptions ++= Seq("-unchecked", "-deprecation", "-optimize", "-Xlint", "-Yinline-warnings", "-explaintypes"),
+  scalaVersion := "2.12.4",
+  scalacOptions ++= Seq("-unchecked", "-deprecation", "-optimize", "-Xlint", /* "-Yinline-warnings", */ "-explaintypes"),
   // Some dependencies like `javacpp` are packaged with maven-plugin packaging
   classpathTypes += "maven-plugin",
   libraryDependencies ++= Seq(
-    "org.bytedeco.javacpp-presets" % "flycapture"               % "2.9.3.43-1.2" classifier "",
-    "org.bytedeco.javacpp-presets" % "flycapture"               % "2.9.3.43-1.2" classifier platform,
+    "org.bytedeco.javacpp-presets" % "flycapture"               % "2.11.3.121-1.4" classifier "",
+    "org.bytedeco.javacpp-presets" % "flycapture"               % "2.11.3.121-1.4" classifier platform,
     "log4j"                        % "log4j"                    % "1.2.17",
     "org.scala-lang"               % "scala-reflect"            % scalaVersion.value,
-    "org.scala-lang.modules"      %% "scala-parser-combinators" % "1.0.4"
+    "org.scala-lang.modules"      %% "scala-parser-combinators" % "1.1.0"
   ),
   resolvers ++= Seq(
     Resolver.sonatypeRepo("snapshots"),
@@ -37,13 +39,13 @@ val commonSettings = Seq(
 
 val uiSettings = commonSettings ++ Seq(
   libraryDependencies ++= Seq(
-    "org.clapper"   %% "grizzled-slf4j"      % "1.1.0",
-    "org.slf4j"      % "slf4j-api"           % "1.7.21",
-    "org.slf4j"      % "slf4j-log4j12"       % "1.7.21",
-    "org.scalafx"   %% "scalafx"             % "8.0.92-R10",
-    "org.scalafx"   %% "scalafxml-core-sfx8" % "0.2.2"
+    "org.clapper"   %% "grizzled-slf4j"      % "1.3.2",
+    "org.slf4j"      % "slf4j-api"           % "1.7.25",
+    "org.slf4j"      % "slf4j-log4j12"       % "1.7.25",
+    "org.scalafx"   %% "scalafx"             % "8.0.144-R12",
+    "org.scalafx"   %% "scalafxml-core-sfx8" % "0.4"
   ),
-  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
 )
 
 lazy val check_macro = project.in(file("check_macro")).settings(commonSettings: _*)
